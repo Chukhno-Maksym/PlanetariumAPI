@@ -16,7 +16,7 @@ class ShowSession(models.Model):
 class Ticket(models.Model):
     row = models.IntegerField()
     seat = models.IntegerField()
-    show_session = models.ForeignKey("ShowSession", on_delete=models.CASCADE)
+    show_session = models.ForeignKey("ShowSession", on_delete=models.CASCADE, related_name='tickets')
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
 
     class Meta:
@@ -30,8 +30,12 @@ class Reservation(models.Model):
 
 class PlanetariumDome(models.Model):
     name = models.CharField(max_length=127)
-    seat = models.IntegerField(validators=[MinValueValidator(1)])
+    rows = models.IntegerField(validators=[MinValueValidator(1)])
     seats_in_row = models.IntegerField(validators=[MinValueValidator(1)])
+
+    @property
+    def planetarium_dome_capacity(self):
+        return self.rows * self.seats_in_row
 
 
 class AstronomyShow(models.Model):

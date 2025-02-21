@@ -12,12 +12,12 @@ from planetarium.views import (
 
 router = routers.DefaultRouter()
 
-router.register('show_session', ShowSessionViewSet)
+router.register('show-session', ShowSessionViewSet)
 router.register('tickets', TicketViewSet)
 router.register('reservation', ReservationViewSet)
-router.register('planetarium_dome', PlanetariumDomeViewSet)
-router.register('astronomy_show', AstronomyShowViewSet)
-router.register('show_theme', ShowThemeViewSet)
+router.register('planetarium-dome', PlanetariumDomeViewSet)
+router.register('astronomy-show', AstronomyShowViewSet)
+router.register('show-theme', ShowThemeViewSet)
 
 urlpatterns = [path('', include(router.urls))]
 
