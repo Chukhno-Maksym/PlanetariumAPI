@@ -61,7 +61,7 @@ class ShowSessionListSerializer(ShowSessionSerializer):
 
 
 class ShowSessionDetailSerializer(ShowSessionSerializer):
-    astronomy_show = AstronomyShowSerializer(read_only=True)
+    astronomy_show = AstronomyShowDetailSerializer(read_only=True)
     planetarium_dome = PlanetariumDomeSerializer(read_only=True)
     class Meta:
         model = ShowSession
@@ -78,7 +78,6 @@ class ReservationSerializer(serializers.ModelSerializer):
 
 class TicketSerializer(serializers.ModelSerializer):
     reservation = ReservationSerializer(read_only=True)
-
 
     class Meta:
         model = Ticket

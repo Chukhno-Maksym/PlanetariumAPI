@@ -12,6 +12,9 @@ class ShowSession(models.Model):
     class Meta:
         unique_together = ('planetarium_dome', 'show_time')
 
+    def __str__(self):
+        return f"{self.astronomy_show.title} - {self.show_time.strftime('%Y-%m-%d %H:%M')}"
+
 
 class Ticket(models.Model):
     row = models.IntegerField()
@@ -37,12 +40,21 @@ class PlanetariumDome(models.Model):
     def planetarium_dome_capacity(self):
         return self.rows * self.seats_in_row
 
+    def __str__(self):
+        return self.name
+
 
 class AstronomyShow(models.Model):
     title = models.CharField(max_length=127)
     description = models.TextField(blank=True)
     theme = models.ManyToManyField("ShowTheme", related_name="shows")
 
+    def __str__(self):
+        return self.title
+
 
 class ShowTheme(models.Model):
     name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
