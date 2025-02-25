@@ -1,4 +1,5 @@
 from django.db import transaction
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
 import user
@@ -19,9 +20,15 @@ class PlanetariumDomeSerializer(serializers.ModelSerializer):
 
 
 class PlanetariumDomeDetailSerializer(serializers.ModelSerializer):
+    planetarium_dome_capacity = serializers.SerializerMethodField()
+
     class Meta:
         model = PlanetariumDome
         fields = ("id", "name", "rows", "seats_in_row", "planetarium_dome_capacity")
+
+    @extend_schema_field(serializers.IntegerField())
+    def get_planetarium_dome_capacity(self, obj):
+        return obj.planetarium_dome_capacity
 
 
 class ShowThemeSerializer(serializers.ModelSerializer):

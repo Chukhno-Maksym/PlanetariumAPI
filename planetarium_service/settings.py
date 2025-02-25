@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     "rest_framework.authtoken",
     'debug_toolbar',
+    "drf_spectacular",
     #user apps
     'planetarium',
     'user',
@@ -135,7 +136,8 @@ AUTH_USER_MODEL = 'user.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ]
+    ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
