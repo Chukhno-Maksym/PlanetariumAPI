@@ -1,6 +1,14 @@
+import os
+
+from django.conf import settings
 from django.db.models import Count, F
-from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from xhtml2pdf import pisa
 
 from planetarium.models import (
     ShowSession,
@@ -53,9 +61,20 @@ class TicketViewSet(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     permission_classes = [IsAdminOrOwner]
 
-    def perform_create(self, serializer):
-        reservation = Reservation.objects.create(user=self.request.user)
-        serializer.save(reservation=reservation)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        reservation = Reservation.objects.create(user=request.user)
+        ticket = serializer.save(reservation=reservation)
+
+        html_content = render_to_string('ticket.html', {'ticket': ticket})
+
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="ticket.pdf"'
+        pisa_status = pisa.CreatePDF(html_content, dest=response)
+
+        return response
 
 class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
