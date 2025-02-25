@@ -16,7 +16,6 @@ Planetarium API is a RESTful API for booking tickets, managing show sessions, pl
 - **Show Session Management**: Administrators can create, view, update, and delete astronomy show sessions.
 - **Dynamic Management of Planetariums and Shows**: Support for multiple planetariums and shows, allowing location selection for each session.
 - **Authentication and Authorization**: API is protected using tokens, where users authenticate to access private endpoints.
-- **Django Admin Panel**: For easy management of models via the default Django admin panel.
 - **API Testing**: Built-in tests to verify the functionality of the API.
 
 ## Installation
@@ -101,7 +100,7 @@ To access the API, you need to authenticate via a token. To do this, request a t
 
 #### 2. **Tickets**
 
-- **POST** `/api/planetarium/tickets/` — create a ticket for a session (must specify seat).
+- **POST** `/api/planetarium/tickets/` — create a ticket for a session (must specify seat). After creating a ticket, it automatically downloaded in pdf file.
 
 #### 3. **Reservations**
 
@@ -137,3 +136,10 @@ python manage.py test
    ```bash
    docker run -d -p 8001:8000 planetarium-api
    ```
+![image](https://github.com/user-attachments/assets/f4895b5a-d6ba-4dca-8b09-ee6b07d0ca9d)
+![image](https://github.com/user-attachments/assets/2144f3a7-3913-4144-a4b1-e8662773bc96)
+![image](https://github.com/user-attachments/assets/be7a3cbf-4c5e-45e3-b42d-fcff6c9261fe)
+![image](https://github.com/user-attachments/assets/3142a32f-94d0-4715-9b57-b0083ce785ec)
+![image](https://github.com/user-attachments/assets/bf17a46f-ebd1-4638-a4c8-fa37dff330cd)
+![image](https://github.com/user-attachments/assets/cbfc7c95-b5a5-4b79-998c-8b6db5fab47e)
+![image](https://github.com/user-attachments/assets/1a968693-615f-420f-b97f-54b18abda2e1)
