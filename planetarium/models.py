@@ -17,8 +17,8 @@ class ShowSession(models.Model):
 
 
 class Ticket(models.Model):
-    row = models.IntegerField()
-    seat = models.IntegerField()
+    row = models.IntegerField(validators=[MinValueValidator(1)])
+    seat = models.IntegerField(validators=[MinValueValidator(1)])
     show_session = models.ForeignKey("ShowSession", on_delete=models.CASCADE, related_name='tickets')
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
 

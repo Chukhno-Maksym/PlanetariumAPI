@@ -2,7 +2,6 @@ from django.db import transaction
 from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 
-import user
 from planetarium.models import (
     ShowSession,
     Ticket,
@@ -11,12 +10,13 @@ from planetarium.models import (
     AstronomyShow,
     ShowTheme
 )
+from planetarium.validators import validate_seat_in_row
 
 
 class PlanetariumDomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlanetariumDome
-        fields = ("id", "name")
+        fields = ("id", "name", "rows", "seats_in_row")
 
 
 class PlanetariumDomeDetailSerializer(serializers.ModelSerializer):
@@ -96,3 +96,12 @@ class TicketSerializer(serializers.ModelSerializer):
             ticket = Ticket.objects.create(reservation=reservation, **validated_data)
             return ticket
 
+    def validate(self, attrs):
+        show_session = attrs.get('show_session')
+        planetarium_dome = show_session.planetarium_dome
+
+        row = attrs.get('row')
+        seat = attrs.get('seat')
+        validate_seat_in_row(row, seat, planetarium_dome)
+
+        return attrs

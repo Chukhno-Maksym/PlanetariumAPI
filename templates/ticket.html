@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ ticket }}</title>
+</head>
+<body>
+    <h1>Ticket for {{ ticket.show_session.astronomy_show.title }}</h1>
+    <p>Seat: {{ ticket.row }} - {{ ticket.seat }}</p>
+    <p>Reservation by: {{ ticket.reservation.user.username }}</p>
+</body>
+</html>
