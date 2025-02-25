@@ -82,10 +82,27 @@ class ShowSessionViewSet(viewsets.ModelViewSet):
 
     @extend_schema(
         parameters=[
-            OpenApiParameter(name="date", description="Filter by session date", required=False, type=str),
-            OpenApiParameter(name="planetarium_dome", description="Filter by planetarium dome", required=False, type=int),
-            OpenApiParameter(name="min_tickets", description="Minimum available tickets", required=False, type=int),
-            OpenApiParameter(name="max_tickets", description="Maximum available tickets", required=False, type=int),
+            OpenApiParameter(
+                name="date",
+                description="Filter by session date",
+                required=False,
+                type=str),
+            OpenApiParameter(
+                name="planetarium_dome",
+                description="Filter by planetarium dome",
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name="min_tickets",
+                description="Minimum available tickets",
+                required=False,
+                type=int),
+            OpenApiParameter(
+                name="max_tickets",
+                description="Maximum available tickets",
+                required=False,
+                type=int
+            ),
         ],
         responses={200: ShowSessionListSerializer}
     )
