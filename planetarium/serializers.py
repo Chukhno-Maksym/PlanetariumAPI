@@ -8,7 +8,7 @@ from planetarium.models import (
     Reservation,
     PlanetariumDome,
     AstronomyShow,
-    ShowTheme
+    ShowTheme,
 )
 from planetarium.validators import validate_seat_in_row
 
@@ -24,7 +24,13 @@ class PlanetariumDomeDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PlanetariumDome
-        fields = ("id", "name", "rows", "seats_in_row", "planetarium_dome_capacity")
+        fields = (
+            "id",
+            "name",
+            "rows",
+            "seats_in_row",
+            "planetarium_dome_capacity"
+        )
 
     @extend_schema_field(serializers.IntegerField())
     def get_planetarium_dome_capacity(self, obj):
@@ -45,6 +51,7 @@ class AstronomyShowSerializer(serializers.ModelSerializer):
 
 class AstronomyShowDetailSerializer(serializers.ModelSerializer):
     theme = ShowThemeSerializer(many=True, read_only=False)
+
     class Meta:
         model = AstronomyShow
         fields = ("id", "title", "description", "theme")
@@ -55,24 +62,47 @@ class ShowSessionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ShowSession
-        fields = ("id", "show_time", "astronomy_show", "planetarium_dome", "tickets_available")
+        fields = (
+            "id",
+            "show_time",
+            "astronomy_show",
+            "planetarium_dome",
+            "tickets_available",
+        )
 
 
 class ShowSessionListSerializer(ShowSessionSerializer):
-    astronomy_show = serializers.SlugRelatedField(many=False, read_only=True, slug_field="title")
-    planetarium_dome = serializers.SlugRelatedField(many=False, read_only=True, slug_field="name")
+    astronomy_show = serializers.SlugRelatedField(
+        many=False, read_only=True, slug_field="title"
+    )
+    planetarium_dome = serializers.SlugRelatedField(
+        many=False, read_only=True, slug_field="name"
+    )
 
     class Meta:
         model = ShowSession
-        fields = ("id", "show_time", "astronomy_show", "planetarium_dome", "tickets_available")
+        fields = (
+            "id",
+            "show_time",
+            "astronomy_show",
+            "planetarium_dome",
+            "tickets_available",
+        )
 
 
 class ShowSessionDetailSerializer(ShowSessionSerializer):
     astronomy_show = AstronomyShowDetailSerializer(read_only=True)
     planetarium_dome = PlanetariumDomeSerializer(read_only=True)
+
     class Meta:
         model = ShowSession
-        fields = ("id", "show_time", "astronomy_show", "planetarium_dome", "tickets_available")
+        fields = (
+            "id",
+            "show_time",
+            "astronomy_show",
+            "planetarium_dome",
+            "tickets_available",
+        )
 
 
 class ReservationSerializer(serializers.ModelSerializer):
@@ -93,15 +123,18 @@ class TicketSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         with transaction.atomic():
             reservation = validated_data.pop("reservation")
-            ticket = Ticket.objects.create(reservation=reservation, **validated_data)
+            ticket = Ticket.objects.create(
+                reservation=reservation,
+                **validated_data
+            )
             return ticket
 
     def validate(self, attrs):
-        show_session = attrs.get('show_session')
+        show_session = attrs.get("show_session")
         planetarium_dome = show_session.planetarium_dome
 
-        row = attrs.get('row')
-        seat = attrs.get('seat')
+        row = attrs.get("row")
+        seat = attrs.get("seat")
         validate_seat_in_row(row, seat, planetarium_dome)
 
         return attrs

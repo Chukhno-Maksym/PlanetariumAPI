@@ -7,18 +7,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planetarium', '0005_alter_ticket_reservation_alter_ticket_show_session'),
+        ("planetarium", "0005_alter_ticket_reservation_alter_ticket_show_session"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='ticket',
-            name='row',
-            field=models.IntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="ticket",
+            name="row",
+            field=models.IntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='seat',
-            field=models.IntegerField(validators=[django.core.validators.MinValueValidator(1)]),
+            model_name="ticket",
+            name="seat",
+            field=models.IntegerField(
+                validators=[django.core.validators.MinValueValidator(1)]
+            ),
         ),
     ]

@@ -9,4 +9,5 @@ def validate_seat_in_row(row, seat, planetarium_dome):
         raise ValidationError(f"Only {rows_in_dome} rows. No row № {row}")
 
     if seat > seats_in_row:
-        raise ValidationError(f"No seat № {seat}. The maximum is {seats_in_row} seats.")
+        raise ValidationError(f"No seat № {seat}. "
+                              f"The maximum is {seats_in_row} seats.")

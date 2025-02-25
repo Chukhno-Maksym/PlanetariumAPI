@@ -7,18 +7,25 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('planetarium', '0004_alter_ticket_reservation'),
+        ("planetarium", "0004_alter_ticket_reservation"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='ticket',
-            name='reservation',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='planetarium.reservation'),
+            model_name="ticket",
+            name="reservation",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="planetarium.reservation",
+            ),
         ),
         migrations.AlterField(
-            model_name='ticket',
-            name='show_session',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='tickets', to='planetarium.showsession'),
+            model_name="ticket",
+            name="show_session",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="tickets",
+                to="planetarium.showsession",
+            ),
         ),
     ]

@@ -5,30 +5,45 @@ from planetarium_service import settings
 
 
 class ShowSession(models.Model):
-    astronomy_show = models.ForeignKey('AstronomyShow', on_delete=models.CASCADE)
-    planetarium_dome = models.ForeignKey('PlanetariumDome', on_delete=models.CASCADE)
+    astronomy_show = models.ForeignKey(
+        "AstronomyShow",
+        on_delete=models.CASCADE
+    )
+    planetarium_dome = models.ForeignKey(
+        "PlanetariumDome",
+        on_delete=models.CASCADE
+    )
     show_time = models.DateTimeField()
 
     class Meta:
-        unique_together = ('planetarium_dome', 'show_time')
+        unique_together = ("planetarium_dome", "show_time")
 
     def __str__(self):
-        return f"{self.astronomy_show.title} - {self.show_time.strftime('%Y-%m-%d %H:%M')}"
+        return (
+            f"{self.astronomy_show.title}"
+            f"- {self.show_time.strftime('%Y-%m-%d %H:%M')}"
+        )
 
 
 class Ticket(models.Model):
     row = models.IntegerField(validators=[MinValueValidator(1)])
     seat = models.IntegerField(validators=[MinValueValidator(1)])
-    show_session = models.ForeignKey("ShowSession", on_delete=models.CASCADE, related_name='tickets')
+    show_session = models.ForeignKey(
+        "ShowSession", on_delete=models.CASCADE, related_name="tickets"
+    )
     reservation = models.ForeignKey("Reservation", on_delete=models.CASCADE)
 
     class Meta:
-        unique_together = ('row', 'seat', 'show_session')
+        unique_together = ("row", "seat", "show_session")
 
 
 class Reservation(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="reservations")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="reservations"
+    )
 
 
 class PlanetariumDome(models.Model):

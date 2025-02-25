@@ -11,26 +11,32 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('planetarium', '0001_initial'),
+        ("planetarium", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='reservation',
-            name='user',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reservations', to=settings.AUTH_USER_MODEL),
+            model_name="reservation",
+            name="user",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="reservations",
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='astronomyshow',
-            name='theme',
-            field=models.ManyToManyField(related_name='shows', to='planetarium.showtheme'),
+            model_name="astronomyshow",
+            name="theme",
+            field=models.ManyToManyField(
+                related_name="shows", to="planetarium.showtheme"
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='ticket',
-            unique_together={('row', 'seat', 'show_session')},
+            name="ticket",
+            unique_together={("row", "seat", "show_session")},
         ),
         migrations.AlterUniqueTogether(
-            name='showsession',
-            unique_together={('planetarium_dome', 'show_time')},
+            name="showsession",
+            unique_together={("planetarium_dome", "show_time")},
         ),
     ]
