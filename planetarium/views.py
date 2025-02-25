@@ -135,6 +135,9 @@ class TicketViewSet(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
     permission_classes = [IsAdminOrOwner]
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -162,6 +165,9 @@ class ReservationViewSet(viewsets.ModelViewSet):
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
     permission_classes = [IsReservationAdminOrOwner]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 @extend_schema_view(
     list=extend_schema(summary="Get all planetarium domes"),

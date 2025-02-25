@@ -12,7 +12,7 @@ from planetarium.views import (
 
 router = routers.DefaultRouter()
 
-router.register('show-session', ShowSessionViewSet)
+router.register('show-session', ShowSessionViewSet, basename='show-session')
 router.register('tickets', TicketViewSet)
 router.register('reservation', ReservationViewSet)
 router.register('planetarium-dome', PlanetariumDomeViewSet)

@@ -76,11 +76,11 @@ class ShowSessionDetailSerializer(ShowSessionSerializer):
 
 
 class ReservationSerializer(serializers.ModelSerializer):
-    user = serializers.SlugRelatedField(many=False, read_only=True, slug_field="username")
+    email = serializers.EmailField(source="user.email", read_only=True)
 
     class Meta:
         model = Reservation
-        fields = ("id", "created_at", "user")
+        fields = ("id", "created_at", "email")
 
 
 class TicketSerializer(serializers.ModelSerializer):
